@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.sql.Timestamp;
 
 
 public class Select {
@@ -13,27 +14,30 @@ public class Select {
             s = stdIn.readLine(); // grab the next line (or null)
         }
 
-        System.out.println(findKthLargest(numList, Integer.parseInt(args[0])));
+        System.out.println(new Timestamp(System.currentTimeMillis()));
+        System.out.println(findKthLargest(numList, Integer.parseInt(args[0]), 0 , numList.size() - 1));
+        System.out.println(new Timestamp(System.currentTimeMillis()));
+
     }
 
-    public static int findKthLargest (List<Integer> numList, int k) {
-        if (k < 1 || numList == null || k > numList.size() ) {
+    public static int findKthLargest (List<Integer> numList, int k, int begin, int end) {
+        if ( k < 1 || numList == null || k > numList.size() ) {
             throw new IllegalArgumentException();
         }
 
-        int pivotIndex = (int)(Math.random() * numList.size());
+        int pivotIndex = (int) (Math.random() * ((end - begin) + 1)) + begin;
         //System.out.println("; " + pivotIndex);
-        swap(numList, pivotIndex, numList.size() - 1);
-        pivotIndex = partition(numList, 0, numList.size() - 1);
+        swap(numList, pivotIndex, end);
+        pivotIndex = partition(numList, begin, end);
 
 
         if ((k-1) < pivotIndex) {
 
-            return findKthLargest ( numList.subList(0, pivotIndex) , k );
+            return findKthLargest (numList , k , begin, pivotIndex - 1);
 
         } else if ((k-1) > pivotIndex) {
 
-            return findKthLargest(  numList.subList(pivotIndex + 1, numList.size()) , (k - 1 - pivotIndex) );
+            return findKthLargest(numList , k , pivotIndex + 1, end);
 
         } else {//equal
 

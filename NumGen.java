@@ -1,9 +1,7 @@
 public class NumGen {
     public static void main(String[] args) {
-            for (int i = 0; i < 19; i++) {
-                System.out.println((int)(Math.random() * 20) + 1);
+            for (int i = 1; i <= 10000000; i++) {
+                System.out.println((int)(Math.random() * 1000000) + 1);
             }
-
-
     }
 }
