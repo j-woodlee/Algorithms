@@ -45,10 +45,7 @@ public class MathMethods {
 
     static long gcd(long m, long n) {
         long r = m % n;
-        if(r == 0) {
-            return n;
-        }
-        return gcd(n, r);
+        return r == 0 ? n : gcd(n, r);
     }
 
     static long lcm(long m, long n) {
@@ -64,11 +61,19 @@ public class MathMethods {
     }
 
     static double root(int n, double x, double epsilon) {
+        double upperBound, lowerBound;
+        if (x == 1.0) {
+            return 1;
+        } else if (x < 1.0) {
+            upperBound = 1;
+            lowerBound = 0;
+        }
+        upperBound = x;
+        lowerBound = 0;
         return 0;
     }
 
     static double sqrt(double x, double epsilon) {
         return 0;
     }
-
 }
