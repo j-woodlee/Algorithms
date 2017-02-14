@@ -5,7 +5,14 @@ public class MathMethods {
     public static void main(String[] args) {
         // System.out.println(factorial(4));
         // System.out.println(fibonacci(7));
-
+        // System.out.println(gcd(1,2));
+        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17));
+        System.out.println(2*2*3*3*5*5*11*13);
+        System.out.println(2*3*3*3*7*13*17);
+        System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17));
+        System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*2*3*3*5*5*11*13);
+        System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*3*3*3*7*13*17);
+        // System.out.println(2*3*3*13*2*5*5*11*13*7*17);
     }
 
     static BigInteger factorial(int n) {
@@ -18,7 +25,6 @@ public class MathMethods {
 
         while(nBigInt.compareTo(BigInteger.ZERO) > 0) {
             product = product.multiply(nBigInt);
-            // System.out.println(product);
             nBigInt = nBigInt.subtract(new BigInteger("1"));
         }
         return product;
@@ -38,11 +44,15 @@ public class MathMethods {
     }
 
     static long gcd(long m, long n) {
-        return 0;
+        long r = m % n;
+        if(r == 0) {
+            return n;
+        }
+        return gcd(n, r);
     }
-    
+
     static long lcm(long m, long n) {
-        return 0;
+        return (m*n)/(gcd(m,n));
     }
 
     static double poly(double x, double[] coeff) {
