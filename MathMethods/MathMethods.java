@@ -7,12 +7,16 @@ public class MathMethods {
         // System.out.println(fibonacci(7));
         // System.out.println(gcd(1,2));
         // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17));
-        System.out.println(2*2*3*3*5*5*11*13);
-        System.out.println(2*3*3*3*7*13*17);
-        System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17));
-        System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*2*3*3*5*5*11*13);
-        System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*3*3*3*7*13*17);
+        // System.out.println(2*2*3*3*5*5*11*13);
+        // System.out.println(2*3*3*3*7*13*17);
+        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17));
+        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*2*3*3*5*5*11*13);
+        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*3*3*3*7*13*17);
         // System.out.println(2*3*3*13*2*5*5*11*13*7*17);
+        // System.out.println(poly(1,new double[]{2,9,6,13}));
+        System.out.println(root(3,27,0.1));
+
+        // System.out.println(((13 + 6) + 9) + 2);
     }
 
     static BigInteger factorial(int n) {
@@ -53,7 +57,11 @@ public class MathMethods {
     }
 
     static double poly(double x, double[] coeff) {
-        return 0;
+        double val = coeff[coeff.length - 1]; //val = 13
+        for (int i = coeff.length - 2; i >= 0; i--) {
+            val = val*x + coeff[i];
+        }
+        return val;
     }
 
     static double power(double x, int n) {
@@ -62,18 +70,29 @@ public class MathMethods {
 
     static double root(int n, double x, double epsilon) {
         double upperBound, lowerBound;
+
         if (x == 1.0) {
             return 1;
         } else if (x < 1.0) {
             upperBound = 1;
             lowerBound = 0;
+        } else {
+            upperBound = x;
+            lowerBound = 1;
         }
-        upperBound = x;
-        lowerBound = 0;
-        return 0;
+        double mid = 0;
+        while(upperBound - lowerBound > epsilon) {
+            mid = ((upperBound - lowerBound) / 2.0) + lowerBound;
+            if (Math.pow(mid,n) > x) {
+                upperBound = mid;
+            } else {
+                lowerBound = mid;
+            }
+        }
+        return mid;
     }
 
     static double sqrt(double x, double epsilon) {
-        return 0;
+        return root(2, x, epsilon);
     }
 }
