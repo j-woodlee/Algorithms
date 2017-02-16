@@ -124,12 +124,15 @@ public class MathMethods {
         if (x == 0) {
             return 0;
         }
+        if(n <= 0 || epsilon == 0) {
+            throw new IllegalArgumentException();
+        }
 
         boolean neg = false;
         if (n % 2 == 1 && x < 0) {
             neg = true;
             x = -x;
-        } else if (n <= 0 || x < 0 || epsilon == 0) {
+        } else if (x < 0) {
             throw new IllegalArgumentException();
         }
 
