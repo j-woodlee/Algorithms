@@ -121,13 +121,18 @@ public class MathMethods {
     static double root(int n, double x, double epsilon) {
 
         double upperBound, lowerBound;
-        if (n <= 0 || x < 0 || epsilon == 0) {
-            throw new IllegalArgumentException();
-        }
-
         if (x == 0) {
             return 0;
         }
+
+        boolean neg = false;
+        if (n % 2 == 1 && x < 0) {
+            neg = true;
+            x = -x;
+        } else if (n <= 0 || x < 0 || epsilon == 0) {
+            throw new IllegalArgumentException();
+        }
+
         if (x == 1.0) {
             return 1;
         } else if (x < 1.0) {
@@ -147,7 +152,7 @@ public class MathMethods {
                 lowerBound = mid;
             }
         }
-        return mid;
+        return neg ? -mid : mid;
     }
 
     static double sqrt(double x, double epsilon) {
