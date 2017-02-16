@@ -3,23 +3,52 @@ import java.math.BigInteger;
 public class MathMethods {
 
     public static void main(String[] args) {
-        // System.out.println(factorial(4));
-        // System.out.println(fibonacci(7));
-        // System.out.println(gcd(1,2));
-        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17));
-        // System.out.println(2*2*3*3*5*5*11*13);
-        // System.out.println(2*3*3*3*7*13*17);
-        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17));
-        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*2*3*3*5*5*11*13);
-        // System.out.println(lcm(2*2*3*3*5*5*11*13,2*3*3*3*7*13*17)/2*3*3*3*7*13*17);
-        // System.out.println(2*3*3*13*2*5*5*11*13*7*17);
-        // System.out.println(poly(1,new double[]{2,9,6,13}));
-        System.out.println(root(3,27,0.1));
+        try {
+            String method = args[0];
+            if (method.equals("factorial") && args.length == 2) {
+                System.out.println(factorial(Integer.parseInt(args[1])));
+            } else if (method.equals("fibonacci") && args.length == 2) {
+                System.out.println(fibonacci(Integer.parseInt(args[1])));
+            } else if (method.equals("gcd") && args.length == 3) {
+                System.out.println(gcd(Long.parseLong(args[1]), Long.parseLong(args[2])));
+            } else if (method.equals("lcm") && args.length == 3) {
+                System.out.println(gcd(Long.parseLong(args[1]), Long.parseLong(args[2])));
+            } else if (method.equals("poly")) {
+                double x = Double.parseDouble(args[1]);
+                double[] coeffs = new double[args.length - 2];
+                for (int i = 2; i < args.length; i++) {
+                    coeffs[i - 2] = Double.parseDouble(args[i]);
+                }
+                System.out.println(poly(x, coeffs));
+            } else if (method.equals("power") && args.length == 3) {
+                System.out.println(power(Double.parseDouble(args[1]), Integer.parseInt(args[2])));
+            } else if (method.equals("root") && args.length == 4) {
+                System.out.println(root(Integer.parseInt(args[1]), Double.parseDouble(args[2]), Double.parseDouble(args[3])));
+            } else if (method.equals("sqrt") && args.length == 3) {
+                System.out.println(sqrt(Double.parseDouble(args[1]), Double.parseDouble(args[2])));
+            } else {
+                usage();
+            }
+        } catch (java.lang.ArrayIndexOutOfBoundsException aioobe) {
+            System.out.println("Must supply arguments.");
+            usage();
+        } catch (IllegalArgumentException iae) {
+            System.out.println("Improper arguments.");
+            usage();
+        } catch (Exception e) {
+            usage();
+        }
+    }
 
-        // System.out.println(((13 + 6) + 9) + 2);
+    public static void usage() {
+        System.out.println("usage: <method> <args>");
     }
 
     static BigInteger factorial(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException();
+        }
+
         if (n == 1 || n == 0) {
             return new BigInteger("1");
         }
@@ -35,6 +64,9 @@ public class MathMethods {
     }
 
     static BigInteger fibonacci(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException();
+        }
         BigInteger nminus1th = BigInteger.ZERO;
         BigInteger nth = BigInteger.ONE;
 
@@ -48,15 +80,20 @@ public class MathMethods {
     }
 
     static long gcd(long m, long n) {
+        m = m < 0 ? -m : m;
+        n = n < 0 ? -n : n;
         long r = m % n;
         return r == 0 ? n : gcd(n, r);
     }
 
     static long lcm(long m, long n) {
-        return (m*n)/(gcd(m,n));
+        return (m*n)/gcd(m,n);
     }
 
     static double poly(double x, double[] coeff) {
+        if (coeff.length <= 0 ) {
+            throw new IllegalArgumentException();
+        }
         double val = coeff[coeff.length - 1]; //val = 13
         for (int i = coeff.length - 2; i >= 0; i--) {
             val = val*x + coeff[i];
@@ -65,12 +102,32 @@ public class MathMethods {
     }
 
     static double power(double x, int n) {
-        return 0;
+
+        if (n < 0) {
+            return 1 / power(x, -n);
+        }
+
+        if (n == 0) {
+            return 1;
+        }
+        double y = power(x, n / 2);
+        if (n % 2 == 0) {
+            return y*y;
+        } else {
+            return x*y*y;
+        }
     }
 
     static double root(int n, double x, double epsilon) {
-        double upperBound, lowerBound;
 
+        double upperBound, lowerBound;
+        if (n <= 0 || x < 0 || epsilon == 0) {
+            throw new IllegalArgumentException();
+        }
+
+        if (x == 0) {
+            return 0;
+        }
         if (x == 1.0) {
             return 1;
         } else if (x < 1.0) {
@@ -80,6 +137,7 @@ public class MathMethods {
             upperBound = x;
             lowerBound = 1;
         }
+
         double mid = 0;
         while(upperBound - lowerBound > epsilon) {
             mid = ((upperBound - lowerBound) / 2.0) + lowerBound;
