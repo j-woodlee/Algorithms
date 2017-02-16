@@ -3,7 +3,6 @@ import java.math.BigInteger;
 public class MathMethods {
 
     public static void main(String[] args) {
-        try {
             String method = args[0];
             if (method.equals("factorial") && args.length == 2) {
                 System.out.println(factorial(Integer.parseInt(args[1])));
@@ -29,19 +28,10 @@ public class MathMethods {
             } else {
                 usage();
             }
-        } catch (java.lang.ArrayIndexOutOfBoundsException aioobe) {
-            System.out.println("Must supply arguments.");
-            usage();
-        } catch (IllegalArgumentException iae) {
-            System.out.println("Improper arguments.");
-            usage();
-        } catch (Exception e) {
-            usage();
-        }
     }
 
     public static void usage() {
-        System.out.println("usage: <method> <args>");
+        System.out.println("Make sure that the number of arguments passed is correct.  usage: java MathMethods <method> <args>");
     }
 
     static BigInteger factorial(int n) {
