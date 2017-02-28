@@ -89,7 +89,12 @@ public class SumoSolver {
         for(int i = 0; i < itemArray.length; i++) {
             itemArray[i] = new Item(prices[i], weights[i]);
         }
-        System.out.println(optimize(prices, weights, budget, prices.length, solvedSols, itemArray));
+        ItemList answers = optimize(prices, weights, budget, prices.length, solvedSols, itemArray);
+
+        for(Item i : answers.getItems()) {
+            System.out.println("$" + i.cost + " / " + i.weight + " pounds");
+        }
+        System.out.println(answers.items.size() + " items" +  " / " + "$" + answers.getTotalCost() + " / " + answers.getTotalWeight() + " pounds");
     }
 
     public static void usage() {
