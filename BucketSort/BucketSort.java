@@ -28,7 +28,10 @@ public class BucketSort {
                 doubleArgs.add(d.doubleValue());
             }
         }
-        System.out.println(doubleArgs);
+
+        for(Double d : doubleArgs) {
+            System.out.println(d.doubleValue());
+        }
     }
 
     public static ArrayList<ArrayList<Double>> bucketSort(ArrayList<Double> numbers, double max, double min) {
