@@ -51,12 +51,13 @@ public class CrownAndAnchor {
             }
         }
 
-
+        System.out.println("Rounds played: " + 10000001);
         System.out.println("House Wins: " + houseWins);
         System.out.println("Player Wins: " + playerWins);
         System.out.println("totalDollarsBet: " + totalDollarsBet);
         System.out.println("moneyWonByHouse: " + moneyWonByHouse);
-        System.out.println("Percentage of total money bet won by the house: " + ((double)moneyWonByHouse/(double)totalDollarsBet));
+        System.out.println("Percentage of total money bet won by the house: " + ((double)moneyWonByHouse/(double)totalDollarsBet) * 100 + "%");
+        // System.out.println("House wins " + ((double) houseWins/10000001) * 100 + " percent of the time");
 
     }
 }
